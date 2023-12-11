@@ -1,9 +1,10 @@
 Varun Jonnavithula (vjonna)
-Ashwin Murali ()
+Ashwin Murali (ashwinm3)
 Pranav Peddamalla (pranavp1)
 
-App description goes here
+This app takes a users name, email, and music taste and then generates music reccomendations for them into one playlist
+which is then saved into their library so they have fresh new music to listen to which they may like
 
-API links go here
+Spotify Web API: https://developer.spotify.com/documentation/web-api
 
-Youtube demo video goes here
+Youtube demo video link goes here

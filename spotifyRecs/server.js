@@ -2,10 +2,11 @@
 const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
+const favicon = require("serve-favicon");
 const app = express();
 require("dotenv").config({path: path.resolve(__dirname, '.env')});
 
-// mongo db connection requirements
+// mongo db connection
 const {MongoClient, ServerApiVersion} = require('mongodb');
 const uri = process.env.MONGO_DB_CONNECTION_STRING;
 const dbCollection = {db: process.env.MONGO_DB_NAME, collection: process.env.MONGO_COLLECTION};
@@ -60,8 +61,9 @@ main();
 app.set("views", path.resolve(__dirname, "templates"));
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(favicon(path.join(__dirname, 'images', 'spotify logo real.ico')));
 
-// ALL THE POST AND GET REQUESTS GO HERE
+// get and post requests
 app.get("/", (request, response) => {
     response.render('index');
 });
