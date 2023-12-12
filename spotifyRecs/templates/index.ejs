@@ -12,16 +12,16 @@
         #title {
             color: rgb(27, 215, 96);
             font-size: 60px;
-            font-family: "Circular Std";
-            text-align: center;
+            font-family: "Circular Std Black";
+            margin-left: 41.5%;
         }
 
         label {
             color: white;
-            font-family: "Circular Std";
+            font-family: "Circular Std Black";
         }
 
-        input {
+        .fields {
             background-color: rgb(18, 18, 18);
             height: 3vw;
             width: 20vw;
@@ -33,36 +33,39 @@
             padding-left: 10px;
         }
 
-        input:focus {
+        .fields:focus {
             border-color: white;
             outline: none;
         }
 
-        input:hover {
+        .fields:hover {
             border-color: white;
         }
 
-        #form-div {
+        #main {
             margin-left: 40%;
         }
 
         #submitButton {
             background-color: rgb(27, 215, 96);
             border-radius: 40px;
+            height: 3vw;
+            width: 21vw;
+            font-size: 1.2vw;
             border: none;
             cursor: pointer;
             color: black;
-            font-family: "Circular Std";
+            font-family: "Circular Std Black";
         }
     </style>
 </head>
 <body>
     <h1 id="title">SpotRecs</h1>
-    <div id="form-div">
+    <div id="main">
         <form id="enter-info" name="mainForm">
-            <label id="nameLabel">Name</label><br><input type="text" id="enterName" name="name" placeholder="Name"><br><br>
-            <label id="emailLabel">Email address</label><br><input type="email" id="enterEmail" name="email" placeholder="Email address"><br><br>
-            <label id="tasteLabel">Music taste</label><br><input type="text" id="enterTaste" name="musicTaste" placeholder="Music taste"><br><br><br><br>
+            <label id="nameLabel">Name</label><br><input type="text" id="enterName" class="fields" name="name" placeholder="Name" required><br><br>
+            <label id="emailLabel">Email address</label><br><input type="email" id="enterEmail" class="fields" name="email" placeholder="Email address" required><br><br>
+            <label id="tasteLabel">Music taste</label><br><input type="text" id="enterTaste" class="fields" name="musicTaste" placeholder="Music taste" required><br><br><br>
             <input type="submit" value="Submit" id="submitButton">
         </form>
     </div>
