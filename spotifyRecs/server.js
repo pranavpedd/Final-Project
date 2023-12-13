@@ -1,16 +1,15 @@
-// required libraries
+// // required libraries
 const path = require("path");
 const express = require("express");
+const app = express();
 const bodyParser = require("body-parser");
 const favicon = require("serve-favicon");
-const app = express();
 require("dotenv").config({path: path.resolve(__dirname, '.env')});
 
-// mongo db connection
-const {MongoClient, ServerApiVersion} = require('mongodb');
+const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = process.env.MONGO_DB_CONNECTION_STRING;
-const dbCollection = {db: process.env.MONGO_DB_NAME, collection: process.env.MONGO_COLLECTION};
-const client = new MongoClient(uri, {serverApi: ServerApiVersion.v1});
+const client = new MongoClient(uri, { serverApi: ServerApiVersion.v1 });
+const dbCollection = {db: process.env.MONGO_DB_NAME, collection: process.env.MONGO_DB_COLLECTION_NAME};
 
 // default encoding
 process.stdin.setEncoding('utf-8');
@@ -65,7 +64,34 @@ app.use(favicon(path.join(__dirname, 'images', 'spotify logo real.ico')));
 
 // get and post requests
 app.get("/", (request, response) => {
-    response.render('index');
+    const variables = {
+        port: port,
+    };
+
+    response.render('index', variables);
 });
+
+app.post("/", async (request, response) => {
+    const variables = {
+        port: port,
+    };
+    
+    let user = {
+        name: request.body.name,
+        email: request.body.email,
+        musicTaste: request.body.musicTaste
+    };
+
+    try {
+        await insertUser(client, dbCollection, user);
+        response.render("index", variables);
+    } catch(error) {
+        console.error(error);
+    }
+});
+
+async function insertUser(client, dbCollection, user) {
+    await client.db(dbCollection.db).collection(dbCollection.collection).insertOne(user);
+}
 
 app.listen(port);

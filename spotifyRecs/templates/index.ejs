@@ -62,7 +62,7 @@
 <body>
     <h1 id="title">SpotRecs</h1>
     <div id="main">
-        <form id="enter-info" name="mainForm">
+        <form action="http://localhost:<%- port %>" method="post" id="info" name="musicForm">
             <label id="nameLabel">Name</label><br><input type="text" id="enterName" class="fields" name="name" placeholder="Name" required><br><br>
             <label id="emailLabel">Email address</label><br><input type="email" id="enterEmail" class="fields" name="email" placeholder="Email address" required><br><br>
             <label id="tasteLabel">Music taste</label><br><input type="text" id="enterTaste" class="fields" name="musicTaste" placeholder="Music taste" required><br><br><br>
