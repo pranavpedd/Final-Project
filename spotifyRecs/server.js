@@ -80,13 +80,15 @@ app.post("/submit", async (request, response) => {
 
     try {
         await insertUser(client, dbCollection, user);
-        response.redirect("/reccomendations");
+        response.redirect("/recommendations");
     } catch(error) {
         console.error(error);
     }
 });
 
-app.get("/reccomendations", (request, response) => {
+app.get("/recommendations", (request, response) => {
+    // variables would go here for song name and artist
+
     response.render('taste');
 });
 
