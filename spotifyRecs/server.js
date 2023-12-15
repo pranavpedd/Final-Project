@@ -6,9 +6,9 @@ const bodyParser = require("body-parser");
 const favicon = require("serve-favicon");
 require("dotenv").config({path: path.resolve(__dirname, '.env')});
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const {MongoClient, ServerApiVersion} = require('mongodb');
 const uri = process.env.MONGO_DB_CONNECTION_STRING;
-const client = new MongoClient(uri, { serverApi: ServerApiVersion.v1 });
+const client = new MongoClient(uri, {serverApi: ServerApiVersion.v1});
 const dbCollection = {db: process.env.MONGO_DB_NAME, collection: process.env.MONGO_DB_COLLECTION_NAME};
 
 // default encoding
@@ -16,7 +16,7 @@ process.stdin.setEncoding('utf-8');
 
 // invalid number of commands
 if (process.argv.length !== 3) {
-    console.log(`Usage ${path.basename(process.argv[1])}`)
+    console.log(`Usage ${path.basename(process.argv[1])}`);
     process.exit(1);
 }
 
@@ -72,10 +72,6 @@ app.get("/", (request, response) => {
 });
 
 app.post("/", async (request, response) => {
-    const variables = {
-        port: port,
-    };
-    
     let user = {
         name: request.body.name,
         email: request.body.email,
@@ -84,7 +80,7 @@ app.post("/", async (request, response) => {
 
     try {
         await insertUser(client, dbCollection, user);
-        response.render("index", variables);
+        response.render("taste");
     } catch(error) {
         console.error(error);
     }
