@@ -62,10 +62,10 @@
 <body>
     <h1 id="title">SpotRecs</h1>
     <div id="main">
-        <form action="http://localhost:<%- port %>" method="post" id="info" name="musicForm">
+        <form action="/submit" method="post" id="info" name="musicForm">
             <label id="nameLabel">Name</label><br><input type="text" id="enterName" class="fields" name="name" placeholder="Name" required><br><br>
-            <label id="emailLabel">Spotify email address</label><br><input type="email" id="enterEmail" class="fields" name="email" placeholder="Spotify email address" required><br><br>
-            <label id="tasteLabel">Favorite genre of music</label><br><input type="text" id="enterTaste" class="fields" name="musicTaste" placeholder="Favorite genre of music" required><br><br><br>
+            <label id="emailLabel">Spotify email address</label><br><input type="email" id="enterEmail" class="fields" name="email" placeholder="Email address" required><br><br>
+            <label id="tasteLabel">Favorite genre of music</label><br><input type="text" id="enterTaste" class="fields" name="musicTaste" placeholder="Genre" required><br><br><br>
             <input type="submit" value="Submit" id="submitButton">
         </form>
     </div>

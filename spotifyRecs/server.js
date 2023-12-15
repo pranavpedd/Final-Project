@@ -71,7 +71,7 @@ app.get("/", (request, response) => {
     response.render('index', variables);
 });
 
-app.post("/", async (request, response) => {
+app.post("/submit", async (request, response) => {
     let user = {
         name: request.body.name,
         email: request.body.email,
@@ -80,10 +80,14 @@ app.post("/", async (request, response) => {
 
     try {
         await insertUser(client, dbCollection, user);
-        response.render("taste");
+        response.redirect("/reccomendations");
     } catch(error) {
         console.error(error);
     }
+});
+
+app.get("/reccomendations", (request, response) => {
+    response.render('taste');
 });
 
 async function insertUser(client, dbCollection, user) {

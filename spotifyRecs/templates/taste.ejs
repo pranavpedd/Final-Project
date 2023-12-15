@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Song reccomendations</title>
+    <title>Reccomendations</title>
     <style>
         body {
             background-color: rgb(15, 15, 15);
@@ -13,10 +13,58 @@
             color: white;
             font-family: "Circular Std Black";
             text-align: center;
+            font-size: 50px;
         }
+
+        .song {
+            line-height: 1.5;
+            margin-left: 36%;
+        }
+
+        .artist {
+            color: white;
+            font-family: "Circular Std Book";
+            font-size: 30px;
+        }
+
+        .song-rank {
+            font-size: 45px;
+            display: inline-block;
+            color: rgb(27, 215, 96);
+            font-family: "Circular Std Black";
+            width: 50px;
+        }
+
+        .title {
+            color: white;
+            font-family: "Circular Std Book";
+            font-size: 30px;
+        }
+
+        #home {
+            background-color: rgb(27, 215, 96);
+            border-radius: 40px;
+            height: 3vw;
+            width: 21vw;
+            font-size: 1.2vw;
+            border: none;
+            cursor: pointer;
+            color: black;
+            font-family: "Circular Std Black";
+            margin-left: 39%;
+        }
+
     </style>
 </head>
 <body>
     <h1 id="recTitle">Song reccomendations</h1>
+    <ul class="song-list">
+        <li class="song"><span class="song-rank">1</span><span class="title">Song name by </span><span class="artist">Artist</span></li>
+        <li class="song"><span class="song-rank">2</span><span class="title">Song name by </span><span class="artist">Artist</span></li>
+        <li class="song"><span class="song-rank">3</span><span class="title">Song name by </span><span class="artist">Artist</span></li>
+        <li class="song"><span class="song-rank">4</span><span class="title">Song name by </span><span class="artist">Artist</span></li>
+        <li class="song"><span class="song-rank">5</span><span class="title">Song name by </span><span class="artist">Artist</span></li>
+    </ul><br><br>
+    <a href="/"><button id="home">Home</button></a>
 </body>
 </html>
