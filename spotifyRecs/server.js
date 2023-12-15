@@ -94,4 +94,6 @@ async function insertUser(client, dbCollection, user) {
     await client.db(dbCollection.db).collection(dbCollection.collection).insertOne(user);
 }
 
+// TODO: spotify api integration
+
 app.listen(port);
