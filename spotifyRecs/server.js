@@ -25,6 +25,11 @@ const port = process.argv[2];
 console.log(`Web server started and running at http://localhost:${port}/`);
 const prompt = "Stop to shutdown the server: ";
 
+// spotify stuff
+const clientID = process.env.CLIENT_ID;
+const clientSecret = process.env.CLIENT_SECRET;
+const redirectURI = `http://localhost:${port}/callback`
+
 // show prompt and make it listen for 'stop' command
 process.stdout.write(prompt);
 process.stdin.on("readable", async function () {
@@ -96,8 +101,56 @@ async function insertUser(client, dbCollection, user) {
     await client.db(dbCollection.db).collection(dbCollection.collection).insertOne(user);
 }
 
+// const randomString = (length) => {
+//     let result = "";
+
+//     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+//     for (let i = 0; i < length; i++) {
+//         result += chars.charAt(Math.floor(Math.random() * chars.length));
+//     }
+
+//     return result;
+// };
+
 // TODO: spotify api integration
+// app.get("/login", (request, response) => {
+//     const state = randomString(16);
+//     const scope = 'user-read-private user-read-email user-top-read';
+//     res.redirect('https://accounts.spotify.com/authorize?' +
+//     querystring.stringify({
+//       response_type: 'code',
+//       client_id: clientID,
+//       scope: scope,
+//       redirect_uri: redirectURI,
+//       state: state
+//     }));
+// });
+
+// app.get("/callback", (req, res) => {
+//     const code = req.query.code || null;
+//     const state = req.query.state || null;
+  
+//     if (state === null) {
+//       res.redirect(
+//         "/#" +
+//         new URLSearchParams({
+//           error: "state_mismatch"
+//         }).toString()
+//       );
+//     } else {
+//       const authOptions = {
+//         url: "https://accounts.spotify.com/api/token",
+//         form: {
+//           code: code,
+//           redirect_uri: redirectURI,
+//           grant_type: "authorization_code"
+//         },
+//         headers: {
+//           Authorization: "Basic " + Buffer.from(clientID + ":" + clientSecret).toString("base64")
+//         },
+//         json: true
+//       };
+//     }
+// });
 
 app.listen(port);
-
-// this is a change to the code
