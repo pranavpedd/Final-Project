@@ -114,7 +114,7 @@ async function insertUser(client, dbCollection, user) {
     .insertOne(user);
 }
 
-async function getProfile(token) {
+async function getTracks(token) {
   const response = await fetch("https://api.spotify.com/v1/me/top/tracks?limit=5", {
       headers: {
         Authorization: "Bearer " + token,
@@ -173,7 +173,7 @@ app.get("/callback", (req, res) => {
       if (!error && response.statusCode === 200) {
         let accessToken = body.access_token;
         let refreshToken = body.refresh_token;
-        getProfile(accessToken);
+        getTracks(accessToken);
         res.render("taste");
       } else {
         res.send(`Error accessing token: ${error}`);
