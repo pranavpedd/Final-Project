@@ -18,7 +18,7 @@ const dbCollection = {
 // spotify stuff
 const clientID = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
-const redirectURI = "http://localhost:5002/callback";
+const redirectURI = "https://spotrecs.onrender.com/callback";
 
 // default encoding
 process.stdin.setEncoding("utf-8");
