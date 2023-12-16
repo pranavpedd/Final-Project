@@ -107,8 +107,10 @@ async function insertUser(client, dbCollection, user) {
     await client.db(dbCollection.db).collection(dbCollection.collection).insertOne(user);
 }
 
+let topTracksIds = []
+
 async function getProfile(token) {
-    const response = await fetch('https://api.spotify.com/v1/me', {
+    const response = await fetch('https://api.spotify.com/v1/me/top/tracks?limit=5', {
         headers: {
             Authorization: 'Bearer ' + token
         }
@@ -116,7 +118,18 @@ async function getProfile(token) {
 
     const data = await response.json();
     console.log(data);
+
+    const tracks = data.items;
+
+    tracks.forEach((track) => {
+        const trackId = track.id;
+        topTracksIds.push(trackId);
+    });
+
+    console.log(topTracksIds)
 }
+
+
 
 // TODO: spotify api integration
 app.get("/login", (request, response) => {
