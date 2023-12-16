@@ -102,16 +102,14 @@ app.post("/submit", async (request, response) => {
 
   try {
     await insertUser(client, dbCollection, user);
+    response.redirect("/login");
   } catch (error) {
     console.error(error);
   }
 });
 
 async function insertUser(client, dbCollection, user) {
-  await client
-    .db(dbCollection.db)
-    .collection(dbCollection.collection)
-    .insertOne(user);
+  await client.db(dbCollection.db).collection(dbCollection.collection).insertOne(user);
 }
 
 async function getTracks(token) {
@@ -123,10 +121,10 @@ async function getTracks(token) {
       },
     }
   );
-
+  
+  let topTracks = [];
   const data = await response.json();
   const tracks = data.items;
-  let topTracks = [];
 
   tracks.forEach((track) => {
     const trackId = track.id;
@@ -154,14 +152,12 @@ async function getTracks(token) {
   }
 
   const recommendedTracks = await getRecommendations();
-  console.log(
-    recommendedTracks.map(
-      ({ name, artists }) =>
-        `${name} by ${artists.map((artist) => artist.name).join(", ")}`
-    )
-  );
+  let ret = recommendedTracks.map(
+    ({ name, artists }) =>
+      `${name} by ${artists.map((artist) => artist.name).join(", ")}`
+  )
 
-  return recommendedTracks;
+  return ret;
 }
 
 // TODO: spotify api integration
@@ -205,14 +201,34 @@ app.get("/callback", (req, res) => {
       json: true,
     };
 
-    request.post(authOptions, function (error, response, body) {
+    request.post(authOptions, async function (error, response, body) {
       if (!error && response.statusCode === 200) {
         let accessToken = body.access_token;
         let refreshToken = body.refresh_token;
-        let tracks = getTracks(accessToken);
-        console.log(typeof tracks + ' this is the type of the tracks thing');
-        console.log(tracks[1]);
-        res.render("taste");
+        let tracks = await getTracks(accessToken);
+        let artists = [];
+        let songs = [];
+        
+        tracks.map(item => {
+          let parts = item.split(' by ');
+          artists.push(parts[1]);
+          songs.push(parts[0]);
+        })
+
+        const variables = {
+          song1: songs[0],
+          song2: songs[1],
+          song3: songs[2],
+          song4: songs[3],
+          song5: songs[4],
+          artist1: artists[0],
+          artist2: artists[1],
+          artist3: artists[2],
+          artist4: artists[3],
+          artist5: artists[4],
+        };
+
+        res.render("taste", variables);
       } else {
         res.send(`Error accessing token: ${error}`);
       }
