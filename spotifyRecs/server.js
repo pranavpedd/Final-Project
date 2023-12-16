@@ -2,22 +2,20 @@
 const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
-const querystring = require('querystring');
+const request = require("request");
 const app = express();
 const favicon = require("serve-favicon");
 require("dotenv").config({ path: path.resolve(__dirname, '.env') });
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const { response } = require("express");
-const { getSystemErrorMap } = require("util");
 const uri = process.env.MONGO_DB_CONNECTION_STRING;
 const client = new MongoClient(uri, { serverApi: ServerApiVersion.v1 });
 const dbCollection = { db: process.env.MONGO_DB_NAME, collection: process.env.MONGO_DB_COLLECTION_NAME };
 
-// spotify stuff
+// spotify stuff 
 const clientID = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
-const redirectURI = `http://localhost:5002/callback`
+const redirectURI = "http://localhost:5002/callback";
 
 // default encoding
 process.stdin.setEncoding('utf-8');
@@ -70,6 +68,18 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(favicon(path.join(__dirname, 'images', 'spotify logo real.ico')));
 
+// helper function
+const randomString = (length) => {
+    let result = "";
+
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    for (let i = 0; i < length; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+
+    return result;
+};
+
 // get and post requests
 app.get("/", (request, response) => {
     const variables = {
@@ -88,89 +98,42 @@ app.post("/submit", async (request, response) => {
 
     try {
         await insertUser(client, dbCollection, user);
-        response.redirect("/recommendations");
     } catch (error) {
         console.error(error);
     }
-});
-
-app.get("/recommendations", (request, response) => {
-    // variables would go here for song name and artist
-
-    response.render('taste');
 });
 
 async function insertUser(client, dbCollection, user) {
     await client.db(dbCollection.db).collection(dbCollection.collection).insertOne(user);
 }
 
-const randomString = (length) => {
-    let result = "";
+async function getProfile(token) {
+    const response = await fetch('https://api.spotify.com/v1/me', {
+        headers: {
+            Authorization: 'Bearer ' + token
+        }
+    });
 
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    for (let i = 0; i < length; i++) {
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-
-    return result;
-};
+    const data = await response.json();
+    console.log(data);
+}
 
 // TODO: spotify api integration
 app.get("/login", (request, response) => {
     const state = randomString(16);
     const scope = 'user-read-private user-read-email user-top-read';
     response.redirect('https://accounts.spotify.com/authorize?' +
-        querystring.stringify({
-            response_type: 'code',
+        new URLSearchParams({
             client_id: clientID,
-            scope: scope,
+            response_type: "code",
             redirect_uri: redirectURI,
-            state: state
-        }));
+            state: state,
+            scope: scope
+        }).toString()
+    );
 });
 
-
-const getRefreshToken = async (token) => {
-
-    // refresh token that has been previously stored
-    //const refreshToken = localStorage.getItem('refresh_token');
-    const url = "https://accounts.spotify.com/api/token";
-
-    const payload = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: new URLSearchParams({
-            grant_type: 'refresh_token',
-            refresh_token: token,
-            client_id: clientID
-        }),
-    };
-
-    try {
-        const response = await fetch(url, payload);
-        const data = await response.json();
-
-        // Assuming the response contains an access token and a new refresh token
-        const accessToken = data.access_token;
-        const newRefreshToken = data.refresh_token;
-        console.log("Access: " + accessToken);
-        console.log("Refresh: " + newRefreshToken);
-
-        // Update the stored access token and refresh token
-        // localStorage.setItem('access_token', accessToken);
-        return newRefreshToken;
-        // localStorage.setItem('refresh_token', newRefreshToken);
-    } catch (error) {
-        console.error('Error refreshing token:', error);
-        // Handle the error (e.g., redirect to login page)
-    }
-}
-
-app.get("/callback", async (req, res) => {
-
-
+app.get("/callback", (req, res) => {
     const code = req.query.code || null;
     const state = req.query.state || null;
 
@@ -195,58 +158,44 @@ app.get("/callback", async (req, res) => {
             json: true
         };
 
-        // fetch(authOptions.url, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/x-www-form-urlencoded',
-        //         'Authorization': 'Basic ' + Buffer.from(clientID + ':' + clientSecret).toString('base64'),
-        //     },
-        //     body: new URLSearchParams(authOptions.form),
-        // })
-        //     .then(async response => response.json())
-        //     .then(async data => {
-        //         const recommendationsURL = 'https://api.spotify.com/v1/me/top/artists';
-
-
-        //         let accessToken = data.access_token
-        //         let newToken = await getRefreshToken(accessToken)
-
-
-        //         return fetch(recommendationsURL, {
-        //             method: 'GET',
-        //             headers: {
-        //                 'Authorization': 'Bearer ' + newToken,
-        //             },
-        //         });
-        //     })
-        //     .then(async response => response.json())
-        //     .then(async recommendations => {
-        //         // Handle recommendations data here
-        //         console.log('Recommendations:', recommendations);
-        //         res.redirect("/recommendations");
-        //     })
-        //     .catch(error => {
-        //         console.error('Error exchanging code for token:', error);
-        //         res.redirect(
-        //             "/#" +
-        //             new URLSearchParams({
-        //                 error: "token_exchange_error"
-        //             }).toString()
-        //         );
-        //     });
-        req.post(authOptions, function (error, response, body) {
+        request.post(authOptions, function (error, response, body) {
             if (!error && response.statusCode === 200) {
                 let accessToken = body.access_token;
                 let refreshToken = body.refresh_token;
-                res.send({
-                    'access_token': accessToken,
-                    'refresh_token': refreshToken
-                });
+                getProfile(accessToken);
+                res.render('taste');
             } else {
                 res.send(`Error accessing token: ${error}`);
             }
         });
     }
+});
+
+app.get('/refresh_token', function (req, res) {
+    let refresh_token = req.query.refresh_token;
+    let authOptions = {
+        url: 'https://accounts.spotify.com/api/token',
+        headers: {
+            'content-type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Basic ' + (new Buffer.from(clientID + ':' + clientSecret).toString('base64'))
+        },
+        form: {
+            grant_type: 'refresh_token',
+            refresh_token: refresh_token
+        },
+        json: true
+    };
+
+    request.post(authOptions, function (error, response, body) {
+        if (!error && response.statusCode === 200) {
+            let access_token = body.access_token;
+            let refreshToken = body.refresh_token;
+            res.send({
+                'access_token': access_token,
+                'refresh_token': refreshToken
+            });
+        }
+    });
 });
 
 app.listen(port);
