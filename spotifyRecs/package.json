@@ -16,7 +16,9 @@
     "http": "^0.0.1-security",
     "mongodb": "^6.3.0",
     "querystring": "^0.2.1",
-    "serve-favicon": "^2.5.0"
+    "request": "^2.88.2",
+    "serve-favicon": "^2.5.0",
+    "spotify-web-api-node": "^5.0.2"
   },
   "devDependencies": {
     "nodemon": "^3.0.2"
