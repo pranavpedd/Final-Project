@@ -115,7 +115,9 @@ async function insertUser(client, dbCollection, user) {
 }
 
 async function getTracks(token) {
-  const response = await fetch("https://api.spotify.com/v1/me/top/tracks?limit=5", {
+  const response = await fetch(
+    "https://api.spotify.com/v1/me/top/tracks?limit=5",
+    {
       headers: {
         Authorization: "Bearer " + token,
       },
@@ -123,7 +125,43 @@ async function getTracks(token) {
   );
 
   const data = await response.json();
-  console.log(data);
+  const tracks = data.items;
+  let topTracks = [];
+
+  tracks.forEach((track) => {
+    const trackId = track.id;
+    topTracks.push(trackId);
+  });
+
+  async function fetchWebApi(endpoint, method, body) {
+    const res = await fetch(`https://api.spotify.com/${endpoint}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      method,
+      body: JSON.stringify(body),
+    });
+    return await res.json();
+  }
+
+  async function getRecommendations() {
+    return (
+      await fetchWebApi(
+        `v1/recommendations?limit=5&seed_tracks=${topTracks.join(",")}`,
+        "GET"
+      )
+    ).tracks;
+  }
+
+  const recommendedTracks = await getRecommendations();
+  console.log(
+    recommendedTracks.map(
+      ({ name, artists }) =>
+        `${name} by ${artists.map((artist) => artist.name).join(", ")}`
+    )
+  );
+
+  return recommendedTracks;
 }
 
 // TODO: spotify api integration
@@ -162,9 +200,7 @@ app.get("/callback", (req, res) => {
         grant_type: "authorization_code",
       },
       headers: {
-        Authorization:
-          "Basic " +
-          Buffer.from(clientID + ":" + clientSecret).toString("base64"),
+        Authorization: "Basic " + Buffer.from(clientID + ":" + clientSecret).toString("base64"),
       },
       json: true,
     };
@@ -173,7 +209,9 @@ app.get("/callback", (req, res) => {
       if (!error && response.statusCode === 200) {
         let accessToken = body.access_token;
         let refreshToken = body.refresh_token;
-        getTracks(accessToken);
+        let tracks = getTracks(accessToken);
+        console.log(typeof tracks + ' this is the type of the tracks thing');
+        console.log(tracks[1]);
         res.render("taste");
       } else {
         res.send(`Error accessing token: ${error}`);
