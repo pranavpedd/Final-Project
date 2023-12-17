@@ -1,94 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <title>SpotRecs</title>
-    <style>
-        @font-face {
-        font-family: circularBlack;
-        src: url("fonts/CircularStd-Black.woff");
-      }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SpotRecs</title>
+  <style>
+    @font-face {
+      font-family: circularBlack;
+      src: url("fonts/CircularStd-Black.woff");
+    }
 
-      @font-face {
-        font-family: circularBook;
-        src: url("fonts/CircularStd-Book.woff");
-      }
+    @font-face {
+      font-family: circularBook;
+      src: url("fonts/CircularStd-Book.woff");
+    }
 
-        body {
-            background-color: rgb(15, 15, 15);
-            font-family: 'Roboto', sans-serif;
-        }
+    body {
+      background-color: rgb(15, 15, 15);
+    }
 
-        #title {
-            color: rgb(27, 215, 96);
-            font-size: 60px;
-            font-family: circularBlack;
-            margin-left: 41.5%;
-        }
+    #title {
+      color: rgb(27, 215, 96);
+      font-size: 60px;
+      font-family: circularBlack;
+      margin-left: 41.5%;
+    }
 
-        label {
-            color: white;
-            font-family: circularBlack;
-        }
+    label {
+      color: white;
+      font-family: circularBlack;
+    }
 
-        .fields {
-            background-color: rgb(18, 18, 18);
-            height: 3vw;
-            width: 20vw;
-            font-size: 1.2vw;
-            font-family: circularBook;
-            border: solid 1px rgb(114, 114, 114);
-            border-radius: 10px;
-            color: white;
-            padding-left: 10px;
-        }
+    .fields {
+      background-color: rgb(18, 18, 18);
+      height: 3vw;
+      width: 20vw;
+      font-size: 1.2vw;
+      font-family: circularBook;
+      border: solid 1px rgb(114, 114, 114);
+      border-radius: 10px;
+      color: white;
+      padding-left: 10px;
+    }
 
-        .fields:focus {
-            border-color: white;
-            outline: none;
-        }
+    .fields:focus {
+      border-color: white;
+      outline: none;
+    }
 
-        .fields:hover {
-            border-color: white;
-        }
+    .fields:hover {
+      border-color: white;
+    }
 
-        #main {
-            margin-left: 40%;
-        }
+    #main {
+      margin-left: 40%;
+    }
 
-        #submitButton {
-            background-color: rgb(27, 215, 96);
-            border-radius: 40px;
-            height: 3vw;
-            width: 21vw;
-            font-size: 1.2vw;
-            border: none;
-            cursor: pointer;
-            color: black;
-            font-family: circularBlack;
-        }
+    #submitButton {
+      background-color: rgb(27, 215, 96);
+      border-radius: 40px;
+      height: 3vw;
+      width: 21vw;
+      font-size: 1.2vw;
+      border: none;
+      cursor: pointer;
+      color: black;
+      font-family: circularBlack;
+    }
 
-        #disclaimer {
-          margin-left: 20%;
-          margin-right: 20%;
-          text-align: center;
-          color: gray;
-          font-family: circularBook;
-        }
-    </style>
+    #disclaimer {
+      margin-left: 20%;
+      margin-right: 20%;
+      text-align: center;
+      color: gray;
+      font-family: circularBook;
+    }
+  </style>
 </head>
+
 <body>
-    <h1 id="title">SpotRecs</h1>
-    <div id="main">
-        <form action="/submit" method="post" id="info" name="musicForm">
-            <label id="nameLabel">Name</label><br><input type="text" id="enterName" class="fields" name="name" placeholder="Name" required><br><br>
-            <label id="emailLabel">Spotify email address</label><br><input type="email" id="enterEmail" class="fields" name="email" placeholder="Email address" required><br><br>
-            <label id="tasteLabel">Favorite genre of music</label><br><input type="text" id="enterTaste" class="fields" name="musicTaste" placeholder="Genre" required><br><br><br>
-            <input type="submit" value="Submit" id="submitButton"><br><br>
-        </form>
-    </div><br><br><br><br><br><br>
-    <h4 id="disclaimer">Spotify allows a limited number of users to connect to our app and we were not able to request for unlimited users by the time the project was due which is why it only works for group members but the demo video shows the full functionality</h4>
+  <h1 id="title">SpotRecs</h1>
+  <div id="main">
+    <form action="/submit" method="post" id="info" name="musicForm">
+      <label id="nameLabel">Name</label><br><input type="text" id="enterName" class="fields" name="name"
+        placeholder="Name" required><br><br>
+      <label id="emailLabel">Spotify email address</label><br><input type="email" id="enterEmail" class="fields"
+        name="email" placeholder="Email address" required><br><br>
+      <label id="tasteLabel">Favorite genre of music</label><br><input type="text" id="enterTaste" class="fields"
+        name="musicTaste" placeholder="Genre" required><br><br><br>
+      <input type="submit" value="Submit" id="submitButton"><br><br>
+    </form>
+  </div><br><br><br><br><br><br>
+  <h4 id="disclaimer">Spotify allows a limited number of users to connect to our app and we were not able to request for
+    unlimited users by the time the project was due which is why it only works for group members but the demo video
+    shows the full functionality</h4>
 </body>
+
 </html>
