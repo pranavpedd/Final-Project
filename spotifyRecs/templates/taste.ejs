@@ -1,103 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Recommendations</title>
-    <style>
-      @font-face {
-        font-family: circularBlack;
-        src: url("fonts/CircularStd-Black.woff");
-      }
 
-      @font-face {
-        font-family: circularBook;
-        src: url("fonts/CircularStd-Book.woff");
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recommendations</title>
+  <style>
+    @font-face {
+      font-family: 'CircularStd-Book';
+      src: url('fonts/CircularStd-Book.woff') format('woff');
+    }
 
-      body {
-        background-color: rgb(15, 15, 15);
-      }
+    @font-face {
+      font-family: 'CircularStd-Black';
+      src: url('fonts/CircularStd-Black.woff') format('woff');
+    }
 
-      #recTitle {
-        color: white;
-        font-family: circularBlack;
-        text-align: center;
-        font-size: 50px;
-      }
+    body {
+      background-color: rgb(15, 15, 15);
+    }
 
-      .song {
-        line-height: 1.5;
-      }
+    #recTitle {
+      color: white;
+      font-family: 'CircularStd-Black';
+      text-align: center;
+      font-size: 50px;
+    }
 
-      .song-list {
-        text-align: center;
-      }
+    .song {
+      line-height: 1.5;
+    }
 
-      .artist {
-        color: white;
-        font-family: circularBook;
-        font-size: 30px;
-      }
+    .song-list {
+      text-align: center;
+    }
 
-      .song-rank {
-        font-size: 45px;
-        display: inline-block;
-        color: rgb(27, 215, 96);
-        font-family: circularBlack;
-        width: 50px;
-      }
+    .artist {
+      color: white;
+      font-family: 'CircularStd-Book';
+      font-size: 30px;
+    }
 
-      .title {
-        color: white;
-        font-family: circularBook;
-        font-size: 30px;
-      }
+    .song-rank {
+      font-size: 45px;
+      display: inline-block;
+      color: rgb(27, 215, 96);
+      font-family: 'CircularStd-Black';
+      width: 50px;
+    }
 
-      #home {
-        background-color: rgb(27, 215, 96);
-        border-radius: 40px;
-        height: 3vw;
-        width: 21vw;
-        font-size: 1.2vw;
-        border: none;
-        cursor: pointer;
-        color: black;
-        font-family: circularBlack;
-        margin-left: 38.7%;
-      }
-    </style>
-  </head>
-  <body>
-    <h1 id="recTitle">Song recommendations</h1>
-    <ul class="song-list">
-      <li class="song">
-        <span class="song-rank">1</span
-        ><span class="title"><%- song1 %> by </span
-        ><span class="artist"><%- artist1 %></span>
-      </li>
-      <li class="song">
-        <span class="song-rank">2</span
-        ><span class="title"><%- song2 %> by </span
-        ><span class="artist"><%- artist2 %></span>
-      </li>
-      <li class="song">
-        <span class="song-rank">3</span
-        ><span class="title"><%- song3 %> by </span
-        ><span class="artist"><%- artist3 %></span>
-      </li>
-      <li class="song">
-        <span class="song-rank">4</span
-        ><span class="title"><%- song4 %> by </span
-        ><span class="artist"><%- artist4 %></span>
-      </li>
-      <li class="song">
-        <span class="song-rank">5</span
-        ><span class="title"><%- song5 %> by </span
-        ><span class="artist"><%- artist5 %></span>
-      </li>
-    </ul>
-    <br /><br />
-    <a href="/"><button id="home">Home</button></a>
-  </body>
+    .title {
+      color: white;
+      font-family: 'CircularStd-Book';
+      font-size: 30px;
+    }
+
+    #home {
+      background-color: rgb(27, 215, 96);
+      border-radius: 40px;
+      height: 3vw;
+      width: 21vw;
+      font-size: 1.2vw;
+      border: none;
+      cursor: pointer;
+      color: black;
+      font-family: 'CircularStd-Black';
+      margin-left: 38.7%;
+    }
+  </style>
+</head>
+
+<body>
+  <h1 id="recTitle">Song recommendations</h1>
+  <ul class="song-list">
+    <li class="song">
+      <span class="song-rank">1</span><span class="title"><%- song1 %> by </span><span class="artist"><%- artist1
+          %></span>
+    </li>
+    <li class="song">
+      <span class="song-rank">2</span><span class="title"><%- song2 %> by </span><span class="artist"><%- artist2
+          %></span>
+    </li>
+    <li class="song">
+      <span class="song-rank">3</span><span class="title"><%- song3 %> by </span><span class="artist"><%- artist3
+          %></span>
+    </li>
+    <li class="song">
+      <span class="song-rank">4</span><span class="title"><%- song4 %> by </span><span class="artist"><%- artist4
+          %></span>
+    </li>
+    <li class="song">
+      <span class="song-rank">5</span><span class="title"><%- song5 %> by </span><span class="artist"><%- artist5
+          %></span>
+    </li>
+  </ul>
+  <br /><br />
+  <a href="/"><button id="home">Home</button></a>
+</body>
+
 </html>
