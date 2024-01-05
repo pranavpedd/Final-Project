@@ -69,6 +69,7 @@ main();
 app.set('views', path.resolve(__dirname, 'templates'));
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use('/fonts', express.static(__dirname + '/fonts'));
 app.use(favicon(path.join(__dirname, 'images', 'spotify logo real.ico')));
 
 // helper function
